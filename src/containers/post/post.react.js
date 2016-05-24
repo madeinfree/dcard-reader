@@ -24,7 +24,7 @@ export default class Post extends Component {
   componentWillMount() {
 
     console.log(this.props.params.id)
-    fetch(`http://store.growth.tw:3001/post/${this.props.params.id}`).then((res) => {
+    fetch(`http://store.growth.tw:3001/api/post/${this.props.params.id}`).then((res) => {
       return res.json();
     }).then((data) => {
       this.setState({
