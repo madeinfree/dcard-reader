@@ -16,7 +16,7 @@ router
     // this.headers = new Headers();
     // const cookie = this.headers.getAll("cookie").join(';');
     // const xsrfToken = this.headers.get("x-xsrf-token");
-    let res = yield fetch('https://www.dcard.tw/_api/posts?popular=true' ,{
+    let res = yield fetch('https://www.dcard.tw/_api/forums/funny/posts?popular=true' ,{
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
