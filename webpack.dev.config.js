@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:8080',
+    'webpack-dev-server/client?http://0.0.0.0:3000',
     'webpack/hot/only-dev-server',
     './src/index.react.js'
   ],
@@ -17,17 +17,22 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      container: path.join(__dirname, './src/container')
+      containers: path.join(__dirname, './src/containers')
     }
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loaders: ['react-hot', 'babel']
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loaders: ['react-hot', 'babel'],
+        include: path.join(__dirname, 'src')
+      },
+      {
+        test: /\.css$/, loader: "style-loader!css-loader"
+      }
+    ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
   ]
 };

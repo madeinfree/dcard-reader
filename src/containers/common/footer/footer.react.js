@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 const styles = {
   display: 'flex',
-  position: 'absolute',
   width: '100%',
   height: 40,
   bottom: 0,
@@ -16,7 +15,7 @@ const styles = {
 const Footer = () => {
   return (
     <div style={ styles }>
-      Footer Here
+      Design by Whien_Liou
     </div>
   )
 }

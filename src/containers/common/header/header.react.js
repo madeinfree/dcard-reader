@@ -16,16 +16,13 @@ const Header = () => {
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to='/'>ReactBasicStarter</Link>
+            <Link to='/'>Dcard - 好讀版</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem key={1} onClick={ () => { browserHistory.push('home') } }>Home</NavItem>
-          </Nav>
-          <Nav pullRight>
-            <NavItem eventKey={1} href="#">Link Right</NavItem>
+            <NavItem key={1} onClick={ () => { browserHistory.push('funny') } }>有趣</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
