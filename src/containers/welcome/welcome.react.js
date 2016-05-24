@@ -32,6 +32,7 @@ class Welcome extends Component {
 
     return (
       <div className='text-center' style={ { overflow: 'auto' } }>
+        <h1>熱門文章</h1>
         { posts }
       </div>
     )
