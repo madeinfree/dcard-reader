@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --port 3000 --hot --config webpack.dev.config.js --content-base ./build"
   },
+  "engines": {
+    "node": "6.0.0",
+    "npm": "3.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/madeinfree/react-basic-starter.git"
