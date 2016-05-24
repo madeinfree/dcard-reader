@@ -8,7 +8,7 @@ import mount from 'koa-mount';
 import serve from 'koa-static';
 
 const app = koa();
-const port = 3002;
+var port = process.env.PORT || 3002;
 
 const buildFile = serve(path.resolve(__dirname, '../build'));
 

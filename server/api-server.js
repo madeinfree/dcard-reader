@@ -4,6 +4,8 @@ import cors from 'koa-cors';
 import fetch from 'isomorphic-fetch';
 var app = koa();
 
+var port = process.env.PORT || 3001;
+
 const router = new Router();
 
 app.use(cors());
@@ -38,4 +40,4 @@ router
 
 app.use(router.routes());
 
-app.listen(3001);
+app.listen(port);
