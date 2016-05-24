@@ -14,6 +14,7 @@ import Common from 'containers/common/common.react';
 import Welcome from 'containers/welcome/welcome.react';
 import Funny from 'containers/home/home.react';
 import Post from 'containers/post/post.react';
+import List from 'containers/list/list.react';
 
 const store = configureStore();
 
@@ -23,6 +24,8 @@ const routes = (
   <Route path="/" component={ Common }>
     <IndexRoute component={ Welcome } />
     <Route path="funny" component={ Funny } />
+    <Route path="forums/:category" component={ List } />
+    <Route path="/forums/post/:id" component={ Post } />
     <Route path="post/:id" component={ Post } />
   </Route>
 )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 import {
@@ -7,20 +7,36 @@ import {
   Button
 } from 'react-bootstrap';
 
+import {
+  fetchPosts
+} from '../../actions/posts-actions';
+
 class Welcome extends Component {
 
   constructor(props) {
     super(props);
   }
 
-  render() {
-    const jumbotronInstance = (
-      <Jumbotron>
-        <h3 className='text-center'>Welcome.</h3>
-      </Jumbotron>
-    );
+  componentDidMount() {
+    const {
+      fetchPosts
+    } = this.props;
 
-    const posts = this.props.posts.posts.getIn(['posts']).size > 0 ? this.props.posts.posts.getIn(['posts']).map((post) => {
+    fetch('http://localhost:3001/api/news/').then((res) => {
+      return res.json();
+    }).then((data) => {
+      fetchPosts(data);
+    });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.posts.posts.getIn(['posts'])!== this.props.posts.posts.getIn(['posts']);
+  }
+
+
+  render() {
+
+    const posts = this.props.posts.posts.getIn(['posts', 'error']) === undefined && this.props.posts.posts.getIn(['posts']) && this.props.posts.posts.getIn(['posts']).size > 0 ? this.props.posts.posts.getIn(['posts']).map((post) => {
       return (
         <div
           key={ `post-id-${ post.getIn(['id']) }` }
@@ -46,6 +62,11 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = {
+  fetchPosts
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Welcome)

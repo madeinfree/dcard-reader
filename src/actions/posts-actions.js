@@ -6,3 +6,12 @@ export function fetchPosts(posts) {
     }
   }
 }
+
+export function fetchForums(forums) {
+  return {
+    type: 'FETCH_FORUMS',
+    payload: {
+      forums
+    }
+  }
+}

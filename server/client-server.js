@@ -27,7 +27,7 @@ app.use(function *() {
   <html>
     <head>
       <meta charset="utf-8">
-      <title>Basic react starter</title>
+      <title>Dcard 熱門好讀版</title>
       <link rel="stylesheet" href="/build/css/bootstrap.min.css">
     </head>
     <body>

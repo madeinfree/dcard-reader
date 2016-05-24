@@ -14,11 +14,34 @@ router
   .get('/', function *(next) {
     this.body = 'Public Api Server';
   })
-  .get('/api', function *(next) {
+  .get(`/api/news`, function *(next) {
+    let res = yield fetch(`https://www.dcard.tw/_api/posts?popular=true&limit=100` ,{
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    let result = yield res.json();
+    this.body = result;
+  })
+  .get('/api/forums/', function *(next) {
     // this.headers = new Headers();
     // const cookie = this.headers.getAll("cookie").join(';');
     // const xsrfToken = this.headers.get("x-xsrf-token");
-    let res = yield fetch('https://www.dcard.tw/_api/forums/funny/posts?popular=true' ,{
+    let res = yield fetch(`https://www.dcard.tw/_api/forums/` ,{
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    let result = yield res.json();
+    this.body = result;
+  })
+  .get('/api/forums/:category', function *(next) {
+    // this.headers = new Headers();
+    // const cookie = this.headers.getAll("cookie").join(';');
+    // const xsrfToken = this.headers.get("x-xsrf-token");
+    let res = yield fetch(`https://www.dcard.tw/_api/forums/${this.params.category}/posts?popular=true&limit=100` ,{
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
