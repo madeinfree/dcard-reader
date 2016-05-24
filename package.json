@@ -35,9 +35,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",
     "redux": "^3.5.2",
-    "redux-thunk": "^2.1.0"
-  },
-  "devDependencies": {
+    "redux-thunk": "^2.1.0",
     "babel": "^6.5.2",
     "babel-core": "^6.8.0",
     "babel-loader": "^6.2.4",
@@ -50,5 +48,7 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
+  },
+  "devDependencies": {
   }
 }
