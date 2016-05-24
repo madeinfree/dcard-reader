@@ -22,7 +22,7 @@ class Welcome extends Component {
       fetchPosts
     } = this.props;
 
-    fetch('http://localhost:3001/api/news/').then((res) => {
+    fetch('http://store.growth.tw:3001/api/news/').then((res) => {
       return res.json();
     }).then((data) => {
       fetchPosts(data);

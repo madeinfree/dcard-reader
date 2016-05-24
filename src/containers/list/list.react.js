@@ -26,7 +26,7 @@ export default class List extends Component {
 
     if(window.location.pathname.split('/')[2] === undefined) return;
 
-    fetch(`http://localhost:3001/api/forums/${window.location.pathname.split('/')[2]}`).then((res) => {
+    fetch(`http://store.growth.tw:3001/api/forums/${window.location.pathname.split('/')[2]}`).then((res) => {
       return res.json();
     }).then((data) => {
       fetchPosts(data);

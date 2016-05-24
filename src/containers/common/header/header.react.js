@@ -29,7 +29,7 @@ export default class Header extends Component {
       params
     } = this.props;
 
-    fetch(`http://localhost:3001/api/forums/`).then((res) => {
+    fetch(`http://store.growth.tw:3001/api/forums/`).then((res) => {
       return res.json();
     }).then((data) => {
       fetchForums(data);
