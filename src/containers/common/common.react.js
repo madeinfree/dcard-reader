@@ -23,7 +23,7 @@ class Common extends Component {
       fetchPosts
     } = this.props;
 
-    fetch('http://localhost:3001/api').then((res) => {
+    fetch('http://store.growth.tw:3001/api').then((res) => {
       return res.json();
     }).then((data) => {
       fetchPosts(data);
