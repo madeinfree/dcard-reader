@@ -15,7 +15,7 @@ const styles = {
 const Footer = () => {
   return (
     <div style={ styles }>
-      Design by Whien_Liou
+      <a style={ { color: '#fff' } } href="https://www.facebook.com/haowei.liou">Design by Whien_Liou</a>
     </div>
   )
 }

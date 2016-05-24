@@ -2,7 +2,7 @@
   "name": "react-basic-starter",
   "version": "0.0.2",
   "description": "The very very basic reactjs starter",
-  "main": "index.js",
+  "main": "./server/client-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js"
