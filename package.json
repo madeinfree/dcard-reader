@@ -5,7 +5,7 @@
   "main": "./server/client-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js"
+    "start": "./node_modules/.bin/babel-node ./server/client-server.js"
   },
   "engines": {
     "node": "6.0.0",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/madeinfree/react-basic-starter#readme",
   "dependencies": {
+    "babel": "^6.5.2",
     "css-loader": "^0.23.1",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
