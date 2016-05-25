@@ -5,6 +5,7 @@
   "main": "./server/client-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-production": "webpack --config webpack.dev.config.js -p --define process.env.NODE_ENV=\"production\" --progress --colors",
     "start": "./node_modules/.bin/babel-node ./server/client-server.js"
   },
   "engines": {
