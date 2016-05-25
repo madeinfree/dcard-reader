@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import fetch from 'isomorphic-fetch';
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
