@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: [
@@ -10,8 +11,6 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: 'build'
   },
-  debug: true,
-  devtool: 'eval-source-map',
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
@@ -32,5 +31,13 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    new CompressionPlugin({
+        asset: "[path].gz[query]",
+        algorithm: "gzip",
+        test: /\.js$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
+    })
   ]
 };
