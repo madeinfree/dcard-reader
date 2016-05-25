@@ -16,6 +16,7 @@ router
   })
   .get(`/api/news`, function *(next) {
     let res = yield fetch(`https://www.dcard.tw/_api/posts?popular=true&limit=100` ,{
+      cache: 'no-store',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -29,6 +30,7 @@ router
     // const cookie = this.headers.getAll("cookie").join(';');
     // const xsrfToken = this.headers.get("x-xsrf-token");
     let res = yield fetch(`https://www.dcard.tw/_api/forums/` ,{
+      cache: 'no-store',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -42,6 +44,7 @@ router
     // const cookie = this.headers.getAll("cookie").join(';');
     // const xsrfToken = this.headers.get("x-xsrf-token");
     let res = yield fetch(`https://www.dcard.tw/_api/forums/${this.params.category}/posts?popular=true&limit=100` ,{
+      cache: 'no-store',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -52,6 +55,7 @@ router
   })
   .get('/api/post/:id', function *(next) {
     let res = yield fetch(`https://www.dcard.tw/_api/posts/${this.params.id}?` ,{
+      cache: 'no-store',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
