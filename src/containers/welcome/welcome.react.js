@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import fetch from 'isomorphic-fetch';
+
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 

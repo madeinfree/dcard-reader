@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import fetch from 'isomorphic-fetch';
+
 import { Link } from 'react-router';
 
 import { Map, fromJS } from 'immutable';
