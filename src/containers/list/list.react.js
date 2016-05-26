@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import {
@@ -19,26 +19,33 @@ class List extends Component {
       routePage: ''
     };
   }
+  componentWillMount() {}
 
-  renderData() {
-    if (window.location.pathname.split('/')[2] === undefined) return;
-    fetch(`http://store.growth.tw:3001/api/forums/${window.location.pathname.split('/')[2]}`).then((res) =>
-      res.json().then((data) => this.props.fetchPosts(data))
-    );
-  }
-
-  componentWillMount() {
-    // this.render_data();
+  componentWillReceiveProps() {
+    this.componentDidMount();
   }
 
   componentDidMount() {
-    browserHistory.listen(() => this.renderData());
-  }
-
-  renderPosts() {
+    // console.log(this.props.posts.posts.getIn([ 'forumsRoute' ]));
+    // this.unlisten = browserHistory.listen(() => {
+    // console.log(window.location.pathname.split('/')[2]);
     if (window.FB && document.getElementsByClassName([ 'fb_iframe_widget' ])[0] === undefined) {
       window.FB.XFBML.parse();
     }
+    const shouldUpdate = window.location.pathname.split('/')[2] !== undefined && this.props.posts.posts.getIn([ 'forumsRoute' ]) !== window.location.pathname.split('/')[2];
+    this.props.fetchPosts(window.location.pathname.split('/')[2], shouldUpdate);
+    // });
+  }
+
+  componentWillUnmount() {
+    // this.unlisten();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.posts.posts.getIn([ 'posts' ]) !== this.props.posts.posts.getIn([ 'posts' ]);
+  }
+
+  renderPosts() {
     if (this.props.posts.posts.getIn([ 'posts', 'error' ]) === undefined &&
       this.props.posts.posts.getIn([ 'posts' ]).size === 0) {
       return (

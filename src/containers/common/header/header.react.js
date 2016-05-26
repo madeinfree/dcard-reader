@@ -19,11 +19,7 @@ import {
 class Header extends Component {
 
   componentDidMount() {
-    fetch('http://store.growth.tw:3001/api/forums/')
-      .then((res) => (
-        res.json().then((data) => (this.props.fetchForums(data)))
-      )
-    );
+    this.props.fetchForums();
   }
 
   shouldComponentUpdate(nextProps) {

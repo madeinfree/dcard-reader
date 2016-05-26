@@ -63,6 +63,17 @@ router
     });
     const result = yield res.json();
     this.body = result;
+  })
+  .get('/api/post/:id/comments', function *() {
+    const res = yield fetch(`https://www.dcard.tw/_api/posts/${this.params.id}/comments?limit=100`, {
+      cache: 'no-store',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+    const result = yield res.json();
+    this.body = result;
   });
 
 app.use(router.routes());
