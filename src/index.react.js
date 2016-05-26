@@ -28,6 +28,7 @@ const routes = (
     <Route path='forums/:category' component={ List } />
     <Route path='/forums/post/:id' component={ Post } />
     <Route path='post/:id' component={ Post } />
+    <Route path='*' component={ () => (<h1 className='text-danger' style={ { textAlign: 'center' } }>尚未找到任何頁面</h1>) } />
   </Route>
 );
 
