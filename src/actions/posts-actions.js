@@ -4,7 +4,7 @@ export function fetchPosts(posts) {
     payload: {
       posts
     }
-  }
+  };
 }
 
 export function fetchForums(forums) {
@@ -13,5 +13,5 @@ export function fetchForums(forums) {
     payload: {
       forums
     }
-  }
+  };
 }

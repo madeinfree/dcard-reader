@@ -64,7 +64,6 @@ class List extends Component {
   }
 
   render() {
-
     return (
       <div className='text-center' style={ { overflow: 'auto' } }>
         <h1>{ this.props.params.category }</h1>
@@ -72,19 +71,19 @@ class List extends Component {
       </div>
     );
   }
-};
+}
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => (
+  {
     posts: state
   }
-}
+);
 
 const mapDispatchToProps = {
   fetchPosts
-}
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(List)
+)(List);
