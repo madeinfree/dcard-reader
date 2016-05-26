@@ -61,7 +61,7 @@ export function fetchPost(postId) {
 
 export function fetchComment(postId) {
   return (dispatch) => {
-    fetch(`http://localhost:3001/api/post/${postId}/comments`)
+    fetch(`http://store.growth.tw:3001/api/post/${postId}/comments`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
