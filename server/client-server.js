@@ -1,9 +1,9 @@
-//basic
+// basic
 import path from 'path';
 
 import koa from 'koa';
 
-//static file
+// static file
 import mount from 'koa-mount';
 import serve from 'koa-static';
 
@@ -11,18 +11,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = koa();
-var port = process.env.PORT || 3002;
+const port = process.env.PORT || 3002;
 
 const buildFile = serve(path.resolve(__dirname, '../build'));
 
 app.use(mount('/build', buildFile));
 
 app.use(function *(next) {
-  let start = new Date();
+  const start = new Date();
   yield next;
-  let ms = new Date - start;
-  this.set('Cookie', ms + 'ms');
-})
+  const ms = new Date - start;
+  this.set('Cookie', `ms${ms}`);
+});
 
 app.use(function *() {
   this.body = `
@@ -48,14 +48,14 @@ app.use(function *() {
     <script src='/build/bundle.js'></script>
     <script>
       var config = {
-        apiUrl: '${ process.env.NODE_ENV }' === 'production' ? '${ process.env.SERVER_URL }' : 'localhost:3002'
+        apiUrl: '${process.env.NODE_ENV}' === 'production' ? '${process.env.SERVER_URL}' : 'localhost:3002'
       }
     </script>
     </body>
   </html>
   `;
-})
+});
 
 app.listen(port, () => {
-  console.log(`Listening on ${port}`)
+  // console.log(`Listening on ${port}`);
 });

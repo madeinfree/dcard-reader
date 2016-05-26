@@ -5,4 +5,4 @@ import {
 
 export default combineReducers({
   posts
-})
+});
