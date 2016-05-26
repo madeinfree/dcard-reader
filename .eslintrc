@@ -7,7 +7,9 @@
   },
   settings: {
     import/resolver: {
-      webpack: { config: 'webpack.dev.config.js' }
+      webpack: {
+        config: 'webpack.*.config.js'
+      }
     }
   },
   "extends": "eslint-config-airbnb",
