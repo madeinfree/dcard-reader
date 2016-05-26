@@ -31,7 +31,7 @@ app.use(function *() {
     <head>
       <meta charset="utf-8">
       <title>Dcard 熱門好讀版</title>
-      <link rel="stylesheet" href="/build/css/bootstrap.min.css">
+      <link rel="stylesheet" href="build/css/bootstrap.min.css">
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -45,7 +45,7 @@ app.use(function *() {
     <body>
     <div id="fb-root"></div>
     <div id="app"></div>
-    <script src='/build/bundle.js'></script>
+    <script src='build/bundle.js'></script>
     <script>
       var config = {
         apiUrl: '${process.env.NODE_ENV}' === 'production' ? '${process.env.SERVER_URL}' : 'localhost:3002'
