@@ -7,6 +7,9 @@ import koa from 'koa';
 import mount from 'koa-mount';
 import serve from 'koa-static';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const app = koa();
 var port = process.env.PORT || 3002;
 
@@ -43,6 +46,11 @@ app.use(function *() {
     <body>
     <div id="app"></div>
     <script src='/build/bundle.js'></script>
+    <script>
+      var config = {
+        apiUrl: '${ process.env.NODE_ENV }' === 'production' ? '${ process.env.SERVER_URL }' : 'localhost:3002'
+      }
+    </script>
     </body>
   </html>
   `;

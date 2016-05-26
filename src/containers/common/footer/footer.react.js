@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const styles = {
   display: 'flex',
@@ -10,14 +10,12 @@ const styles = {
   textAlign: 'center',
   alignItems: 'center',
   justifyContent: 'center'
-}
+};
 
-const Footer = () => {
-  return (
-    <div style={ styles }>
-      <a style={ { color: '#fff' } } href="https://www.facebook.com/haowei.liou">Design by Whien_Liou</a>
-    </div>
-  )
-}
+const Footer = () => (
+  <div style={ styles }>
+    <a style={ { color: '#fff' } } href='https://www.facebook.com/haowei.liou'>Design by Whien_Liou</a>
+  </div>
+);
 
 export default Footer;

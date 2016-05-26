@@ -6,8 +6,6 @@ require('isomorphic-fetch');
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
-import { List, fromJS } from 'immutable';
-
 import {
   fetchForums
 } from '../../../actions/posts-actions';
@@ -15,43 +13,37 @@ import {
 import {
   Navbar,
   Nav,
-  NavItem,
-  NavDropdown,
-  MenuItem
+  NavItem
 } from 'react-bootstrap';
 
-export default class Header extends Component {
-
-  constructor(props) {
-    super(props);
-  }
+class Header extends Component {
 
   componentDidMount() {
-    const {
-      fetchForums,
-      params
-    } = this.props;
-
-    fetch(`http://store.growth.tw:3001/api/forums/`).then((res) => {
-      return res.json();
-    }).then((data) => {
-      fetchForums(data);
-    });
+    fetch('http://store.growth.tw:3001/api/forums/')
+      .then((res) => (
+        res.json().then((data) => (this.props.fetchForums(data)))
+      )
+    );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.forums.posts.getIn(['forums']) !== this.props.forums.posts.getIn(['forums']);
+  shouldComponentUpdate(nextProps) {
+    return nextProps.forums.posts.getIn([ 'forums' ]) !==
+      this.props.forums.posts.getIn([ 'forums' ]);
   }
 
   render() {
-
     const {
       forums
     } = this.props;
 
-    const render_forums = forums.posts.getIn(['forums']) ? forums.posts.getIn(['forums']).slice(0,32).map((forum) => {
-      return <NavItem key={ `forum-${forum.getIn(['name'])}` } onClick={ () => { browserHistory.push(`/forums/${forum.getIn(['alias'])}`) } }>{ forum.getIn(['name']) }</NavItem>
-    }) : <div>Loading data..</div>
+    const renderForums = forums.posts.getIn([ 'forums' ]) ?
+      forums.posts.getIn([ 'forums' ]).slice(0, 32).map((forum) => (
+        <NavItem
+          key={ `forum-${forum.getIn([ 'name' ])}` }
+          onClick={ () => browserHistory.push(`/forums/${forum.getIn([ 'alias' ])}`) } >
+          { forum.getIn([ 'name' ]) }
+        </NavItem>
+      )) : (<div>Loading data..</div>);
 
     return (
       <div>
@@ -64,26 +56,24 @@ export default class Header extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              { render_forums }
+              { renderForums }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    forums: state
-  }
-}
+const mapStateToProps = (state) => ({
+  forums: state
+});
 
 const mapDispatchToProps = {
   fetchForums
-}
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header)
+)(Header);

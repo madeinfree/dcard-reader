@@ -5,8 +5,9 @@
   "main": "./server/client-server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-production": "webpack --config webpack.dev.config.js -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
-    "start": "./node_modules/.bin/babel-node ./server/client-server.js"
+    "start": "./node_modules/.bin/babel-node ./server/client-server.js",
+    "dev:watch": "webpack --config webpack.dev.config.js --watch",
+    "prod:build": "webpack --config webpack.prod.config.js -p --define process.env.NODE_ENV='\"production\"' --progress --colors"
   },
   "engines": {
     "node": "6.0.0",
@@ -32,7 +33,11 @@
     "babel-preset-stage-0": "^6.5.0",
     "compression-webpack-plugin": "^0.3.1",
     "css-loader": "^0.23.1",
+    "dotenv": "^2.0.0",
     "es6-promise": "^3.2.1",
+    "file-loader": "^0.8.5",
+    "font-awesome": "^4.6.3",
+    "fs": "0.0.2",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "koa": "^1.2.0",
@@ -50,7 +55,8 @@
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -58,6 +64,12 @@
     "babel-core": "^6.9.0",
     "babel-loader": "^6.2.4",
     "babel-runtime": "^6.9.0",
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-import-resolver-webpack": "^0.2.4",
+    "eslint-plugin-import": "^1.8.0",
+    "eslint-plugin-jsx-a11y": "^1.2.2",
+    "eslint-plugin-react": "^5.1.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   }
