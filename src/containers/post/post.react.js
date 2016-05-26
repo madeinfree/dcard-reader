@@ -10,7 +10,6 @@ import { Map, fromJS } from 'immutable';
 import './style.css';
 
 const imgReg = /(https?:\/\/.*\.(?:png|jpg))/g;
-// const httpReg = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 export default class Post extends Component {
   constructor(props) {
@@ -19,7 +18,7 @@ export default class Post extends Component {
     this.state = {
       post: new Map(),
       openImage: false,
-      fontSize: 14
+      fontSize: 24
     };
   }
 
@@ -42,11 +41,11 @@ export default class Post extends Component {
       imagePost = post.getIn([ 'content' ]).replace(imgReg, '<br /><img height=500 src=$1 /><br />');
 
       pageShow = openImage ? (
-        <pre style={ { fontSize: this.state.fontSize, whiteSpace: 'pre-wrap' } }>
+        <pre style={ { fontSize: this.state.fontSize, whiteSpace: 'pre-wrap', height: 500, overflow: 'auto' } }>
           <div dangerouslySetInnerHTML={ { __html: imagePost } } />
         </pre>
       ) : (
-        <pre style={ { fontSize: this.state.fontSize, whiteSpace: 'pre-wrap' } }>
+        <pre style={ { fontSize: this.state.fontSize, whiteSpace: 'pre-wrap', height: 500, overflow: 'auto' } }>
           <div dangerouslySetInnerHTML={ { __html: post.getIn([ 'content' ]).replace(imgReg, '<div class="text-danger">[ 請點選圖文版後顯示圖片 ]</div>') } } />
         </pre>
       );
@@ -63,18 +62,26 @@ export default class Post extends Component {
           { contentHeader }
         </h4>
 
+        <div className='text-center'>
+          <div>
+            <Link className='btn btn-default' to={ `/forums/${post.getIn([ 'forumAlias' ])}` }>上一頁</Link>
+          </div>
+          <h3>
+            <button className='btn btn-default' onClick={ () => { this.setState({ openImage: !this.state.openImage }); } }>顯示圖文版</button>
+            <button className='btn btn-default' onClick={ () => { this.setState({ fontSize: 14 }); } }>字體[小]</button>
+            <button className='btn btn-default' onClick={ () => { this.setState({ fontSize: 20 }); } }>字體[中]</button>
+            <button className='btn btn-default' onClick={ () => { this.setState({ fontSize: 32 }); } }>字體[大]</button>
+          </h3>
+        </div>
+
         <div style={ { display: 'flex', justifyContent: 'center' } }>
-          <div style={ { width: '100%' } }>
-            <div>
-              <Link className='btn btn-default' to={ `/forums/${post.getIn([ 'forumAlias' ])}` }>上一頁</Link>
-            </div>
-            <h3 className='text-left'>
-              <button className='btn btn-default' onClick={ () => { this.setState({ openImage: !this.state.openImage }); } }>顯示圖文版</button>
-              <button className='btn btn-default' onClick={ () => { this.setState({ fontSize: 14 }); } }>字體[小]</button>
-              <button className='btn btn-default' onClick={ () => { this.setState({ fontSize: 20 }); } }>字體[中]</button>
-              <button className='btn btn-default' onClick={ () => { this.setState({ fontSize: 32 }); } }>字體[大]</button>
-              { pageShow }
-            </h3>
+          <div style={ { flex: 1 } }>
+            { pageShow }
+          </div>
+          <div style={ { flex: 1 } }>
+            <pre>
+              123
+            </pre>
           </div>
         </div>
 
