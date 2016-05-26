@@ -21,15 +21,13 @@ class List extends Component {
   }
 
   renderData() {
-    if (window.location.pathname.split('/')[2] === undefined) return;
-    fetch(`http://store.growth.tw:3001/api/forums/${window.location.pathname.split('/')[2]}`).then((res) =>
-      res.json().then((data) => this.props.fetchPosts(data))
-    );
+    if (window.location.pathname.split('/')[2] === undefined) {
+      browserHistory.push('/');
+    }
+    this.props.fetchPosts(window.location.pathname.split('/')[2]);
   }
 
-  componentWillMount() {
-    // this.render_data();
-  }
+  componentWillMount() {}
 
   componentDidMount() {
     browserHistory.listen(() => this.renderData());

@@ -12,9 +12,7 @@ import {
 
 class Welcome extends Component {
   componentDidMount() {
-    fetch('http://store.growth.tw:3001/api/news/').then((res) => {
-      res.json().then((data) => this.props.fetchPosts(data));
-    });
+    this.props.fetchPosts();
   }
 
   shouldComponentUpdate(nextProps) {
