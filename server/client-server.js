@@ -40,16 +40,25 @@ app.use(function *() {
 
         ga('create', 'UA-77245773-2', 'auto');
         ga('send', 'pageview');
-
       </script>
     </head>
     <body>
+    <div id="fb-root"></div>
     <div id="app"></div>
     <script src='/build/bundle.js'></script>
     <script>
       var config = {
         apiUrl: '${process.env.NODE_ENV}' === 'production' ? '${process.env.SERVER_URL}' : 'localhost:3002'
       }
+    </script>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.6&appId=828097407218890";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
     </script>
     </body>
   </html>

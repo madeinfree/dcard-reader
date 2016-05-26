@@ -42,6 +42,7 @@ class Welcome extends Component {
 
     return (
       <div className='text-center' style={ { overflow: 'auto' } }>
+        <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
         <h1>熱門文章</h1>
         { posts }
       </div>

@@ -18,6 +18,9 @@ class Common extends Component {
 
 
   render() {
+    if (window.FB && document.getElementsByClassName([ 'fb_iframe_widget' ])[0] === undefined) {
+      window.FB.XFBML.parse();
+    }
     return (
       <div>
         <a href='https://github.com/madeinfree/dcard-reader'>
