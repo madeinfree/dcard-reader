@@ -13,7 +13,7 @@ export function loadingAction(isLoading) {
 }
 
 export function fetchPosts(forums, shouldUpdate = true) {
-  const url = forums === undefined ? `${apiUrl}/api/news/` : `${apiUrl}/api/forums/${forums}`;
+  const url = forums === undefined ? `${apiUrl}api/news/` : `${apiUrl}api/forums/${forums}`;
   if (shouldUpdate) {
     loadingAction(true);
     return (dispatch) => {
@@ -47,7 +47,7 @@ export function fetchPost(postId) {
     dispatch({
       type: 'LOADING_START'
     });
-    fetch(`${apiUrl}/api/post/${postId}`)
+    fetch(`${apiUrl}api/post/${postId}`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -63,7 +63,7 @@ export function fetchPost(postId) {
 
 export function fetchComment(postId) {
   return (dispatch) => {
-    fetch(`${apiUrl}/api/post/${postId}/comments`)
+    fetch(`${apiUrl}api/post/${postId}/comments`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -79,7 +79,7 @@ export function fetchComment(postId) {
 
 export function fetchForums() {
   return (dispatch) => {
-    fetch(`${apiUrl}/api/forums/`)
+    fetch(`${apiUrl}api/forums/`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
