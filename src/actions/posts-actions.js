@@ -11,7 +11,7 @@ export function loadingAction(isLoading) {
 }
 
 export function fetchPosts(forums, shouldUpdate = true) {
-  const url = forums === undefined ? 'http://store.growth.tw:3001/api/news/' : `http://store.growth.tw:3001/api/forums/${forums}`;
+  const url = forums === undefined ? 'http://130.211.255.205/api/news/' : `http://130.211.255.205/api/forums/${forums}`;
   if (shouldUpdate) {
     loadingAction(true);
     return (dispatch) => {
@@ -45,7 +45,7 @@ export function fetchPost(postId) {
     dispatch({
       type: 'LOADING_START'
     });
-    fetch(`http://store.growth.tw:3001/api/post/${postId}`)
+    fetch(`http://130.211.255.205/api/post/${postId}`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -61,7 +61,7 @@ export function fetchPost(postId) {
 
 export function fetchComment(postId) {
   return (dispatch) => {
-    fetch(`http://localhost:3001/api/post/${postId}/comments`)
+    fetch(`http://130.211.255.205/api/post/${postId}/comments`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -77,7 +77,7 @@ export function fetchComment(postId) {
 
 export function fetchForums() {
   return (dispatch) => {
-    fetch('http://store.growth.tw:3001/api/forums/')
+    fetch('http://130.211.255.205/api/forums/')
     .then((res) => {
       res.json().then((data) => {
         dispatch({

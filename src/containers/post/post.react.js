@@ -63,12 +63,13 @@ class Post extends Component {
 
       if (onlyImage) {
         const totalImage = post.posts.getIn([ 'post', 'content' ]).match(imgReg);
-        console.log(totalImage);
-        pageShow = totalImage.map((image) => (
-          // <pre style={ { fontSize: this.state.fontSize, whiteSpace: 'pre-wrap', height: 500, overflow: 'auto' } }>
-          <img height='500' src={ `${image}` } role='presentation' />
-          // </pre>
-        ));
+        if (totalImage) {
+          pageShow = totalImage.map((image) => (
+            // <pre style={ { fontSize: this.state.fontSize, whiteSpace: 'pre-wrap', height: 500, overflow: 'auto' } }>
+            <img height='500' src={ `${image}` } role='presentation' />
+            // </pre>
+          ));
+        }
       }
     }
 
@@ -84,7 +85,8 @@ class Post extends Component {
     const commentsContainer = post.posts.getIn([ 'comments' ]).size > 0 ? post.posts.getIn([ 'comments' ]).map((comment, index) => (
       <div
         key={ `comments-index-${comment.getIn([ 'id' ])}` } >
-        <div> <i className='fa fa-graduation-cap' aria-hidden='true'></i> { comment.getIn([ 'school' ]) } B-{ index + 1 } <h4>{ comment.getIn([ 'content' ]) }</h4></div>
+        <div> <i className='fa fa-graduation-cap' aria-hidden='true'></i> { comment.getIn([ 'school' ]) } B-{ index + 1 } <h2>{ comment.getIn([ 'content' ]) }</h2></div>
+        <hr style={ { borderColor: '#C7C7C7' } } />
       </div>
     )) : null;
 
@@ -110,13 +112,19 @@ class Post extends Component {
 
         <div style={ { display: 'flex' } }>
           <div style={ { flex: 1 } }>
-            <pre style={ { height: 500, overflow: 'auto', border: '1px solid #ccc', backgroundColor: '#f5f5f5', wordBreak: 'break-all', wordWrap: 'break-word', whiteSpace: 'pre-wrap' } }>
+            <pre
+              style={ {
+                fontSize: this.state.fontSize,
+                height: 500, overflow: 'auto', border: '1px solid #ccc', backgroundColor: '#f5f5f5', wordBreak: 'break-all', wordWrap: 'break-word', whiteSpace: 'pre-wrap'
+              } }>
               { pageShow }
             </pre>
           </div>
           <div style={ { flex: 1 } }>
             <pre
-              style={ { height: 500, width: '100%', overflow: 'auto', border: '1px solid #ccc', backgroundColor: '#f5f5f5', wordBreak: 'break-all', wordWrap: 'break-word', whiteSpace: 'pre-wrap' } }>
+              style={ {
+                fontSize: this.state.fontSize,
+                height: 500, width: '100%', overflow: 'auto', border: '1px solid #ccc', backgroundColor: '#f5f5f5', wordBreak: 'break-all', wordWrap: 'break-word', whiteSpace: 'pre-wrap' } }>
               { commentsContainer }
             </pre>
           </div>
