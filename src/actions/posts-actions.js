@@ -1,8 +1,6 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-const apiUrl = window.config.apiUrl;
-
 export function loadingAction(isLoading) {
   return {
     type: isLoading ? 'LOADING_START' : 'LOADING_OVER',
@@ -13,7 +11,7 @@ export function loadingAction(isLoading) {
 }
 
 export function fetchPosts(forums, shouldUpdate = true) {
-  const url = forums === undefined ? `${apiUrl}api/news/` : `${apiUrl}api/forums/${forums}`;
+  const url = forums === undefined ? 'http://130.211.255.205/api/news/' : `http://130.211.255.205/api/forums/${forums}`;
   if (shouldUpdate) {
     loadingAction(true);
     return (dispatch) => {
@@ -47,7 +45,7 @@ export function fetchPost(postId) {
     dispatch({
       type: 'LOADING_START'
     });
-    fetch(`${apiUrl}api/post/${postId}`)
+    fetch(`http://130.211.255.205/api/post/${postId}`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -63,7 +61,7 @@ export function fetchPost(postId) {
 
 export function fetchComment(postId) {
   return (dispatch) => {
-    fetch(`${apiUrl}api/post/${postId}/comments`)
+    fetch(`http://130.211.255.205/api/post/${postId}/comments`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -79,7 +77,7 @@ export function fetchComment(postId) {
 
 export function fetchForums() {
   return (dispatch) => {
-    fetch(`${apiUrl}api/forums/`)
+    fetch('http://130.211.255.205/api/forums/')
     .then((res) => {
       res.json().then((data) => {
         dispatch({
