@@ -41,9 +41,7 @@ class List extends Component {
         if (onlyImage) {
           let totalImage = [];
           totalImage = post.getIn([ 'content' ]).match(imgReg) !== null ? totalImage.concat(post.getIn([ 'content' ]).match(imgReg)) : totalImage;
-          console.log(totalImage);
           totalImage = post.getIn([ 'content' ]).match(imgurReg) !== null ? totalImage.concat(post.getIn([ 'content' ]).match(imgurReg)) : totalImage;
-          console.log(totalImage);
           if (totalImage) {
             pageShow = totalImage.map((image, index) => {
               image = image.replace(imgurReg, 'https://imgur.dcard.tw/$2.jpg');
