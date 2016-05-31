@@ -17,6 +17,7 @@ import './card.css';
 import Modal from 'react-modal';
 
 const imgReg = /(https?:\/\/.*\.(?:png|jpg))/g;
+const imgurReg = /(https?:\/\/imgur.com\/(\w*\d\w*)+(\.[a-zA-Z]{3})?)/g;
 
 class List extends Component {
   constructor(props, context) {
@@ -35,23 +36,35 @@ class List extends Component {
       } = this.state;
       let pageShow;
       if (post.getIn && !post.getIn([ 'error' ]) && this.props.params.id) {
-        const imagePost = post.getIn([ 'content' ]).replace(imgReg, '<br /><img height=300 src=$1 /><br />');
+        let imagePost = post.getIn([ 'content' ]).replace(imgReg, '<br /><img height=300 src=$1 /><br />');
+        imagePost = imagePost.replace(imgurReg, '<br /><img height=300 src=https://imgur.dcard.tw/$2.jpg /><br />');
         if (onlyImage) {
-          const totalImage = post.getIn([ 'content' ]).match(imgReg);
+          let totalImage = [];
+          totalImage = post.getIn([ 'content' ]).match(imgReg) !== null ? totalImage.concat(post.getIn([ 'content' ]).match(imgReg)) : totalImage;
+          console.log(totalImage);
+          totalImage = post.getIn([ 'content' ]).match(imgurReg) !== null ? totalImage.concat(post.getIn([ 'content' ]).match(imgurReg)) : totalImage;
+          console.log(totalImage);
           if (totalImage) {
-            pageShow = totalImage.map((image, index) => (
-              <div
-                key={ `post-${index}-${post.getIn([ 'id' ])}` }>
-                <img height='300' src={ `${image}` } role='presentation' />
-              </div>
-            ));
+            pageShow = totalImage.map((image, index) => {
+              image = image.replace(imgurReg, 'https://imgur.dcard.tw/$2.jpg');
+              return (
+                <div
+                  key={ `post-${index}-${post.getIn([ 'id' ])}` }>
+                  <img height='300' src={ `${image}` } role='presentation' />
+                </div>
+              );
+            });
           }
         }
         if (!onlyImage) {
           pageShow = openImage && !onlyImage ? (
             <div dangerouslySetInnerHTML={ { __html: imagePost } } />
           ) : (
-            <div dangerouslySetInnerHTML={ { __html: post.getIn([ 'content' ]).replace(imgReg, '<div class="text-danger">[ 請點選圖文版後顯示圖片 ]</div>') } } />
+            <div
+              dangerouslySetInnerHTML={ { __html: post.getIn([ 'content' ])
+                .replace(imgurReg, '<div class="text-danger">[ 請點選圖文版後顯示圖片 ]</div>')
+                .replace(imgReg, '<div class="text-danger">[ 請點選圖文版後顯示圖片 ]</div>') }
+            } />
           );
         }
         return (
