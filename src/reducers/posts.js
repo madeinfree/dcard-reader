@@ -6,7 +6,8 @@ const initialPostState = fromJS({
   comments: new List(),
   forums: new List(),
   forumsRoute: new Set(),
-  loading: false
+  loading: false,
+  modalIsOpen: false
 });
 
 export const posts = (state = initialPostState, { type, payload }) => {
@@ -30,6 +31,10 @@ export const posts = (state = initialPostState, { type, payload }) => {
     return state.setIn([ 'forums' ], fromJS(payload.forums));
   case 'LOADING_START':
     return state.setIn([ 'loading' ], true);
+  case 'MODAL_CLOSE':
+    return state.setIn([ 'modalIsOpen' ], false);
+  case 'MODAL_OPEN':
+    return state.setIn([ 'modalIsOpen' ], true);
   default:
     return state;
   }

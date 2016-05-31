@@ -10,6 +10,12 @@ export function loadingAction(isLoading) {
   };
 }
 
+export function modalIs(doing) {
+  return {
+    type: doing ? 'MODAL_OPEN' : 'MODAL_CLOSE'
+  };
+}
+
 export function fetchPosts(forums, shouldUpdate = true) {
   const url = forums === undefined ? 'http://130.211.255.205/api/news/' : `http://130.211.255.205/api/forums/${forums}`;
   if (shouldUpdate) {
