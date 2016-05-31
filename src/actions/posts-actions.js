@@ -13,11 +13,11 @@ export function loadingAction(isLoading) {
 export function fetchPosts(forums, shouldUpdate = true) {
   const url = forums === undefined ? 'http://130.211.255.205/api/news/' : `http://130.211.255.205/api/forums/${forums}`;
   if (shouldUpdate) {
-    loadingAction(true);
+    // loadingAction(true);
     return (dispatch) => {
-      dispatch({
-        type: 'LOADING_START'
-      });
+      // dispatch({
+      //   type: 'LOADING_START'
+      // });
       fetch(url)
       .then((res) => {
         res.json().then((data) => {
@@ -42,9 +42,9 @@ export function fetchPosts(forums, shouldUpdate = true) {
 
 export function fetchPost(postId) {
   return (dispatch) => {
-    dispatch({
-      type: 'LOADING_START'
-    });
+    // dispatch({
+    //   type: 'LOADING_START'
+    // });
     fetch(`http://130.211.255.205/api/post/${postId}`)
     .then((res) => {
       res.json().then((data) => {
