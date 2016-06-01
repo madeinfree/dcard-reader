@@ -30,7 +30,7 @@ app.use(function *() {
   <html>
     <head>
       <meta charset="utf-8">
-      <title>Dcard 熱門好讀版</title>
+      <title>Dcard 熱門牆</title>
       <link rel="stylesheet" type="text/css" href="/build/css/bootstrap.min.css">
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
