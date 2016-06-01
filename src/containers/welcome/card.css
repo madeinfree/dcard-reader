@@ -13,34 +13,40 @@
 }
 
 @media screen and (min-width: 1025px) {
+  .content-container {
+    width: 100%;
+    position: absolute;
+    margin-top: 70px;
+  }
   .cloumn-container {
     padding: 20px;
     column-count: 4;
     column-gap: 10;
-    padding: 20;
   }
 }
 
 @media screen
-  and (min-width: 668px)
+  and (min-width: 768px)
   and (max-width: 1024px) {
+    .content-container {
+      width: 100%;
+      position: absolute;
+      margin-top: 70px;
+    }
     .cloumn-container {
       padding: 20px;
       column-count: 2;
       column-gap: 10;
-      padding: 20;
     }
 }
 
 @media screen
-  and (min-width: 375px)
-  and (max-width: 667px) {
-  .cloumn-container {
-    padding: 20px;
-    column-count: 1;
-    column-gap: 10;
-    padding: 20;
-  }
+  and (max-width: 767px) {
+    .cloumn-container {
+      padding: 20px;
+      column-count: 1;
+      column-gap: 10;
+    }
 }
 
 .ReactModal__Body--open {
@@ -48,6 +54,7 @@
 }
 
 .ReactModal__Overlay {
+  z-index: 999;
   -webkit-perspective: 600;
   perspective: 600;
   opacity: 0;

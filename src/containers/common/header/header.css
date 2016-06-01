@@ -1,3 +1,70 @@
-.navbar {
+.ani {
+  transition: all 300ms ease-in-out;
+}
+
+.navScroll0 {
+  height: 750px;
   border-radius: 0px;
+  background-size: 100% 100%;
+  transition: all 300ms ease-in-out;
+}
+.navScroll0:before {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(http://dcard-reader.herokuapp.com/build/image/logo.jpg);
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    opacity : 0.4;
+    z-index: 0;
+}
+
+@media screen and (min-width: 1025px) {
+  .navContainer {
+    position: fixed;
+  }
+  .navScroll300 {
+    height: 50px;
+    border-radius: 0px;
+    background-size: 100% 100%;
+    overflow: hidden;
+    transition: all 300ms ease-in-out;
+  }
+
+  .navScroll300:hover {
+    height: 200px;
+  }
+}
+
+@media screen
+  and (min-width: 768px)
+  and (max-width: 1024px) {
+    .navContainer {
+      position: fixed;
+    }
+    .navScroll300 {
+      height: 50px;
+      border-radius: 0px;
+      background-size: 100% 100%;
+      overflow: hidden;
+      transition: all 300ms ease-in-out;
+    }
+
+    .navScroll300:hover {
+      height: 220px;
+    }
+}
+
+@media screen
+  and (max-width: 767px) {
+    .navbar-collapse {
+      height: 300px;
+      overflow-y: auto;
+    }
+    .githubTag {
+      display: none;
+    }
 }

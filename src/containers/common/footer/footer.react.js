@@ -8,7 +8,9 @@ const styles = {
   color: '#fff',
   textAlign: 'center',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  position: 'fixed',
+  opacity: 0.75
 };
 
 const Footer = () => (

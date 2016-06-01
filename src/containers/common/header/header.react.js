@@ -20,16 +20,41 @@ import './header.css';
 
 class Header extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      scrolled: false
+    };
+
+    this.onScroll = () => {
+      const body = document.getElementsByTagName('body')[0];
+      if (body.scrollTop > 100 && !this.state.scrolled) {
+        window.removeEventListener('scroll', this.onScroll);
+        this.setState({
+          scrolled: true
+        });
+        return false;
+      }
+      return false;
+    };
+  }
+
   componentDidMount() {
+    window.addEventListener('scroll', this.onScroll);
     this.props.fetchForums();
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.forums.posts.getIn([ 'forums' ]) !==
-      this.props.forums.posts.getIn([ 'forums' ]);
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.forums.posts.getIn([ 'forums' ]) !== this.props.forums.posts.getIn([ 'forums' ]) ||
+      this.state.scrolled !== nextState.scrolled;
   }
-
+// className={ scrollTop < 20 ? 'navScroll0' : 'navScroll300' }
   render() {
+    const {
+      scrolled
+    } = this.state;
+
     const {
       forums
     } = this.props;
@@ -42,11 +67,13 @@ class Header extends Component {
           { forum.getIn([ 'name' ]) }
         </NavItem>
       )) : (<div>Loading data..</div>);
-
+    const navClassName = !scrolled ? 'navScroll0' : 'navScroll300';
     return (
       <div
-        style={ { boxShadow: '0 2px 0 rgba(0,0,0,0.15)' } }>
-        <Navbar inverse>
+        className='navContainer'
+        ref='navbar'
+        style={ { width: '100%', zIndex: 100 } }>
+        <Navbar inverse className={ navClassName } >
           <Navbar.Header>
             <Navbar.Brand>
               <Link to='/'>Dcard - 熱門牆</Link>
