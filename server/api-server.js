@@ -1,3 +1,5 @@
+import conditional from 'koa-conditional-get';
+import etag from 'koa-etag';
 import koa from 'koa';
 import Router from 'koa-router';
 import cors from 'koa-cors';
@@ -8,6 +10,8 @@ const port = process.env.PORT || 3001;
 
 const router = new Router();
 
+app.use(conditional());
+app.use(etag());
 app.use(cors());
 
 router
