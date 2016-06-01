@@ -37,8 +37,8 @@ class Welcome extends Component {
       } = this.state;
       let pageShow;
       if (post.getIn && !post.getIn([ 'error' ]) && this.props.params.id) {
-        let imagePost = post.getIn([ 'content' ]).replace(imgReg, '<br /><img height=300 src=$1 /><br />');
-        imagePost = imagePost.replace(imgurReg, '<br /><img height=300 src=https://imgur.dcard.tw/$2.jpg /><br />');
+        let imagePost = post.getIn([ 'content' ]).replace(imgReg, '<br /><img width="50%" src=$1 /><br />');
+        imagePost = imagePost.replace(imgurReg, '<br /><img width="50%" src=https://imgur.dcard.tw/$2.jpg /><br />');
         if (onlyImage) {
           let totalImage = [];
           totalImage = post.getIn([ 'content' ]).match(imgReg) !== null ? totalImage.concat(post.getIn([ 'content' ]).match(imgReg)) : totalImage;
@@ -47,10 +47,7 @@ class Welcome extends Component {
             pageShow = totalImage.map((image, index) => {
               image = image.replace(imgurReg, 'https://imgur.dcard.tw/$2.jpg');
               return (
-                <div
-                  key={ `post-${index}-${post.getIn([ 'id' ])}` }>
-                  <img height='300' src={ `${image}` } role='presentation' />
-                </div>
+                <img key={ `post-${index}-${post.getIn([ 'id' ])}` } style={ { padding: 10 } } width='50%' src={ `${image}` } role='presentation' />
               );
             });
           }

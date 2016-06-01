@@ -43,6 +43,10 @@
   }
 }
 
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
 .ReactModal__Overlay {
   -webkit-perspective: 600;
   perspective: 600;
@@ -58,6 +62,9 @@
 }
 
 .ReactModal__Content {
+  margin: auto;
+  margin-top: 60px;
+  width: 90%;
   transform: scale(0.5) rotateX(-30deg);
 }
 
