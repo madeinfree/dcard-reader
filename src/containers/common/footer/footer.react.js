@@ -15,7 +15,7 @@ const styles = {
 
 const Footer = () => (
   <div style={ styles }>
-    1.2.0v <a style={ { color: '#fff' } } href='https://www.facebook.com/haowei.liou'>Design by Whien_Liou</a>
+    1.2.5v <a style={ { color: '#fff' } } href='https://www.facebook.com/haowei.liou'>Design by Whien_Liou</a>
   </div>
 );
 
