@@ -68,7 +68,7 @@ class List extends Component {
         return (
           <div className='modal-content'>
             <div className='modal-header'>
-              <button type='button' className='close' onClick={ () => { this.props.modalIs(false); browserHistory.push('/'); } }>
+              <button type='button' className='close' onClick={ () => { this.props.modalIs(false); browserHistory.push(`/forums/${this.props.posts.posts.getIn([ 'forumsRoute' ])}`); } }>
                 <span aria-hidden='true'>&times;</span>
                 <span className='sr-only'>Close</span>
               </button>

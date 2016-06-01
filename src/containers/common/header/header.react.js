@@ -46,7 +46,7 @@ class Header extends Component {
         <Navbar inverse>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to='/'>Dcard - 熱門好讀版</Link>
+              <Link to='/'>Dcard - 熱門牆</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
