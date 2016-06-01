@@ -16,6 +16,8 @@ import {
   NavItem
 } from 'react-bootstrap';
 
+import './header.css';
+
 class Header extends Component {
 
   componentDidMount() {
@@ -42,7 +44,8 @@ class Header extends Component {
       )) : (<div>Loading data..</div>);
 
     return (
-      <div>
+      <div
+        style={ { boxShadow: '0 2px 0 rgba(0,0,0,0.15)' } }>
         <Navbar inverse>
           <Navbar.Header>
             <Navbar.Brand>
