@@ -34,6 +34,10 @@ app.use(function *() {
       <meta name='keywords' content='Dcard 熱門牆 | 全國最大的大學生網路社群平台，透過 Dcard 熱門牆，隨時隨地快速關注最熱門的話題。'>
       <meta name='description' content='Dcard 熱門牆，資料源自 Dcard 全國最大大學生網路平台，透過最簡單、簡潔的操作與畫面打造最快速的瀏覽環境，想直接看圖不看文章嗎？快點進來嘗試前所未有的瀏覽視覺。'>
       <meta name='author' content='madeinfree'>
+      <meta name='og:title' content='Dcard 熱門牆 | 全國最大的大學生網路社群平台，透過 Dcard 熱門牆，隨時隨地快速關注最熱門的話題。'>
+      <meta name='og:description' content='Dcard 熱門牆，資料源自 Dcard 全國最大大學生網路平台，透過最簡單、簡潔的操作與畫面打造最快速的瀏覽環境，想直接看圖不看文章嗎？快點進來嘗試前所未有的瀏覽視覺。'>
+      <meta name='og:url content='http://dcard-reader.herokuapp.com/'>
+      <meta name='og:type' content='website'>
       <title>Dcard 熱門牆</title>
       <link rel="stylesheet" type="text/css" href="/build/css/bootstrap.min.css">
       <script>
