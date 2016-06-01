@@ -12,8 +12,6 @@ import {
   modalIs
 } from '../../actions/posts-actions';
 
-import './card.css';
-
 import Modal from 'react-modal';
 
 const imgReg = /(https?:\/\/.*\.(?:png|jpg))/g;

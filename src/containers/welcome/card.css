@@ -9,7 +9,7 @@
 }
 
 .card:hover {
-  background-color: rgba(201, 241, 244, 0.15);
+  background-color: rgba(231, 231, 231, 0.35);
 }
 
 @media screen and (min-width: 1025px) {
