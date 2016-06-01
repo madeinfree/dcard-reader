@@ -161,6 +161,7 @@ class Welcome extends Component {
 // <Link style={ { color: '#000' } } onClick={ () => { props.onOpenModal(true); } } to={ `post/${props.post.getIn([ 'id' ])}` }>
 const CardView = (props) => (
   <div
+    style={ { cursor: 'pointer' } }
     className='card'
     onClick={
       () => { props.onOpenModal(true); browserHistory.push(`/post/${props.post.getIn([ 'id' ])}`); }
