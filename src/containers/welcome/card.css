@@ -70,7 +70,7 @@
 
 .ReactModal__Content {
   margin: auto;
-  margin-top: 60px;
+  /*margin-top: 60px;*/
   width: 90%;
   transform: scale(0.5) rotateX(-30deg);
 }

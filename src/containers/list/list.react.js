@@ -227,6 +227,7 @@ const CardView = (props) => (
         { ' ' } <i
           style={ props.post.getIn([ 'gender' ]) === 'M' ?
             { color: '#90CAF9' } : { color: '#F48FB1' } } className='fa fa-user' aria-hidden='true'></i> { props.post.getIn([ 'school' ]) ? props.post.getIn([ 'school' ]) : '匿名' }
+            { props.post.getIn([ 'department' ]) && props.post.getIn([ 'department' ]).trim() !== '' ? ` - ${props.post.getIn([ 'department' ])}` : ' ' }
       </h5>
     </div>
   </div>
