@@ -60,6 +60,7 @@
   opacity: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background-color: rgba(0, 0, 0, 0.5);
 }
 

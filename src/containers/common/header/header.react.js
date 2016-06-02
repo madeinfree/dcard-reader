@@ -68,11 +68,15 @@ class Header extends Component {
         </NavItem>
       )) : (<div>Loading data..</div>);
     const navClassName = !scrolled ? 'navScroll0' : 'navScroll300';
+    const arrow = !scrolled ? (
+      <div className='arrow bounce'></div>
+    ) : (null);
     return (
       <div
         className='navContainer'
         ref='navbar'
         style={ { width: '100%', zIndex: 100 } }>
+        { arrow }
         <Navbar inverse className={ navClassName } >
           <Navbar.Header>
             <Navbar.Brand>

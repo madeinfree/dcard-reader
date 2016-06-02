@@ -156,8 +156,13 @@ class List extends Component {
   }
 
   render() {
+    const arrow = (
+      <div className='arrow bounce'></div>
+    );
+
     return (
       <div className='text-center content-container' style={ { overflow: 'auto' } }>
+        { arrow }
         <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
         <h1>{ this.props.posts.posts.getIn([ 'forumsRoute' ]) }</h1>
         <div className='cloumn-container'>
