@@ -16,6 +16,7 @@ import Modal from 'react-modal';
 
 const imgReg = /(https?:\/\/.*\.(?:png|jpg))/g;
 const imgurReg = /(https?:\/\/imgur.com\/(\w*\d\w*)+(\.[a-zA-Z]{3})?)/g;
+const isMobile = navigator.userAgent.indexOf('Mobile') !== -1;
 
 class List extends Component {
   constructor(props, context) {
@@ -162,6 +163,7 @@ class List extends Component {
         <div className='cloumn-container'>
           { this.renderPosts() }
         </div>
+        <div style={ { padding: 10, marginBottom: 30 } } className='fb-comments' data-href='http://dcard-reader.herokuapp.com/' data-mobile={ isMobile } data-width={ isMobile ? '200' : '600' } data-colorscheme='light' data-numposts='5'></div>
         <Modal
           className='Modal__Bootstrap modal-dialog'
           closeTimeoutMS={ 150 }
