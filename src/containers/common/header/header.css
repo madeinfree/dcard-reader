@@ -1,9 +1,25 @@
+.container {
+  margin-right: inherit;
+}
+.navbar-nav > li > a {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding: 5px;
+}
+.nave-item:hover {
+  /*background-color: rgba(204, 56, 56, 0.6); red */
+  background-color: rgba(246, 166, 29, 0.6); /* yellow */
+}
+.nave-item:hover a {
+  font-weight: 900;
+}
+
 .ani {
   transition: all 300ms ease-in-out;
 }
 
 .navScroll0 {
-  height: 750px;
+  height: 200px;
   border-radius: 0px;
   background-size: 100% 100%;
   transition: all 300ms ease-in-out;
@@ -31,11 +47,11 @@
     border-radius: 0px;
     background-size: 100% 100%;
     overflow: hidden;
-    transition: all 300ms ease-in-out;
+    transition: all 80ms ease-in-out;
   }
 
   .navScroll300:hover {
-    height: 200px;
+    height: 120px;
   }
 }
 
@@ -54,7 +70,7 @@
     }
 
     .navScroll300:hover {
-      height: 220px;
+      height: 120px;
     }
 }
 

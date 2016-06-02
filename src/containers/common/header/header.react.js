@@ -62,21 +62,21 @@ class Header extends Component {
     const renderForums = forums.posts.getIn([ 'forums' ]) ?
       forums.posts.getIn([ 'forums' ]).slice(0, 32).map((forum) => (
         <NavItem
+          className='ani nave-item'
           key={ `forum-${forum.getIn([ 'name' ])}` }
           onClick={ () => browserHistory.push(`/forums/${forum.getIn([ 'alias' ])}`) } >
           { forum.getIn([ 'name' ]) }
         </NavItem>
       )) : (<div>Loading data..</div>);
     const navClassName = !scrolled ? 'navScroll0' : 'navScroll300';
-    const arrow = !scrolled ? (
-      <div className='arrow bounce'></div>
-    ) : (null);
+    // const arrow = !scrolled ? (
+    //   <div className='arrow bounce'></div>
+    // ) : (null);
     return (
       <div
         className='navContainer'
         ref='navbar'
         style={ { width: '100%', zIndex: 100 } }>
-        { arrow }
         <Navbar inverse className={ navClassName } >
           <Navbar.Header>
             <Navbar.Brand>
