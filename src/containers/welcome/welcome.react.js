@@ -138,7 +138,9 @@ class Welcome extends Component {
   render() {
     return (
       <div className='text-center content-container' style={ { overflow: 'auto' } }>
-        <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
+        <div className='social-media'>
+          <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
+        </div>
         <h1>熱門文章</h1>
         <div className='cloumn-container'>
           { this.renderPosts() }
