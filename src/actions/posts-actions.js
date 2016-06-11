@@ -17,7 +17,7 @@ export function modalIs(doing) {
 }
 
 export function fetchPosts(forums, shouldUpdate = true) {
-  const url = forums === undefined ? 'http://130.211.255.205/api/news/' : `http://130.211.255.205/api/forums/${forums}`;
+  const url = forums === undefined ? 'http://130.211.255.205:3001/api/news/' : `http://130.211.255.205:3001/api/forums/${forums}`;
   if (shouldUpdate) {
     return (dispatch) => {
       fetch(url)
@@ -44,7 +44,7 @@ export function fetchPosts(forums, shouldUpdate = true) {
 
 export function fetchPost(postId) {
   return (dispatch) => {
-    fetch(`http://130.211.255.205/api/post/${postId}`)
+    fetch(`http://130.211.255.205:3001/api/post/${postId}`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -60,7 +60,7 @@ export function fetchPost(postId) {
 
 export function fetchComment(postId) {
   return (dispatch) => {
-    fetch(`http://130.211.255.205/api/post/${postId}/comments`)
+    fetch(`http://130.211.255.205:3001/api/post/${postId}/comments`)
     .then((res) => {
       res.json().then((data) => {
         dispatch({
@@ -76,7 +76,7 @@ export function fetchComment(postId) {
 
 export function fetchForums() {
   return (dispatch) => {
-    fetch('http://130.211.255.205/api/forums/')
+    fetch('http://130.211.255.205:3001/api/forums/')
     .then((res) => {
       res.json().then((data) => {
         dispatch({
