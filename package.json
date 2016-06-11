@@ -41,6 +41,7 @@
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "koa": "^1.2.0",
+    "koa-bodyparser": "^2.2.0",
     "koa-conditional-get": "^1.0.3",
     "koa-cors": "0.0.16",
     "koa-etag": "^2.1.1",
