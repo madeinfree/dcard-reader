@@ -25,7 +25,8 @@ class List extends Component {
     this.state = {
       openImage: false,
       onlyImage: false,
-      firstIn: true
+      firstIn: true,
+      filter: ''
     };
     // <div
     //   key={ `post-${index}-${post.getIn([ 'id' ])}` }>
@@ -52,6 +53,9 @@ class List extends Component {
                 <img key={ `post-${index}-${post.getIn([ 'id' ])}` } style={ { padding: 10 } } width='50%' src={ `${image}` } role='presentation' />
               );
             });
+          }
+          if (totalImage.length === 0) {
+            pageShow = <div className='text-danger'>[ 此文章沒有任何圖片, 如需觀看請切回文字模式 ]</div>;
           }
         }
         if (!onlyImage) {
@@ -82,8 +86,14 @@ class List extends Component {
               </h4>
             </div>
             <div className='modal-footer'>
-              <button type='button' className='btn btn-default' onClick={ () => { this.setState({ onlyImage: !this.state.onlyImage }); } }>只顯示圖片</button>
-              <button type='button' className='btn btn-default' onClick={ () => { this.setState({ openImage: !this.state.openImage }); } }>顯示圖片</button>
+              <button
+                type='button'
+                className='btn btn-default'
+                onClick={ () => { this.setState({ onlyImage: !this.state.onlyImage, openImage: false }); } }>{ !this.state.onlyImage ? '只顯示圖片' : '關閉只顯示圖片' }</button>
+              <button
+                type='button'
+                className='btn btn-default'
+                onClick={ () => { this.setState({ openImage: !this.state.openImage, onlyImage: false }); } }>{ !this.state.openImage ? '顯示圖片' : '關閉顯示圖片' }</button>
               <button
                 type='button'
                 className='btn btn-default'
@@ -93,6 +103,12 @@ class List extends Component {
         );
       }
       return null;
+    };
+
+    this.onFilter = (ev) => {
+      if (ev.keyCode === 13) {
+        this.setState({ filter: ev.target.value });
+      }
     };
   }
 
@@ -129,7 +145,8 @@ class List extends Component {
           nextProps.posts.posts.getIn([ 'post' ]) !== this.props.posts.posts.getIn([ 'post' ]) ||
           nextProps.posts.posts.getIn([ 'modalIsOpen' ]) !== this.props.posts.posts.getIn([ 'modalIsOpen' ]) ||
           nextState.openImage !== this.state.openImage ||
-          nextState.onlyImage !== this.state.onlyImage;
+          nextState.onlyImage !== this.state.onlyImage ||
+          nextState.filter !== this.state.filter;
   }
 
   renderPosts() {
@@ -144,13 +161,15 @@ class List extends Component {
         this.props.posts.posts.getIn([ 'posts' ]).size > 0 &&
           !this.state.loading ?
             this.props.posts.posts.getIn([ 'posts' ]).map((post) => (
-              <div
-                key={ `post-id-${post.getIn([ 'id' ])}` }>
-                <CardView
-                  { ...this.props }
-                  post={ post }
-                  onOpenModal={ this.props.modalIs } />
-              </div>
+              post.getIn([ 'title' ]).indexOf(this.state.filter) !== -1 ? (
+                <div
+                  key={ `post-id-${post.getIn([ 'id' ])}` }>
+                  <CardView
+                    { ...this.props }
+                    post={ post }
+                    onOpenModal={ this.props.modalIs } />
+                </div>
+              ) : (null)
           )) : (<div>Loading data..</div>)
     );
   }
@@ -160,6 +179,14 @@ class List extends Component {
       <div className='text-center content-container' style={ { overflow: 'auto' } }>
         <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
         <h1>{ this.props.posts.posts.getIn([ 'forumsRoute' ]) }</h1>
+        <div>
+          <input
+            style={ { margin: '0 auto', width: '50%' } }
+            type='text'
+            className='form-control'
+            placeholder='搜尋標題'
+            onKeyDown={ this.onFilter } />
+        </div>
         <div className='cloumn-container'>
           { this.renderPosts() }
         </div>

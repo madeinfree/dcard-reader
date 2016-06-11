@@ -27,7 +27,8 @@ class Welcome extends Component {
     this.state = {
       openImage: false,
       onlyImage: false,
-      firstIn: true
+      firstIn: true,
+      filter: ''
     };
 
     this.renderModalContent = (post) => {
@@ -98,6 +99,12 @@ class Welcome extends Component {
       }
       return null;
     };
+
+    this.onFilter = (ev) => {
+      if (ev.keyCode === 13) {
+        this.setState({ filter: ev.target.value });
+      }
+    };
   }
 
   componentDidMount() {
@@ -109,7 +116,8 @@ class Welcome extends Component {
           nextProps.posts.posts.getIn([ 'post' ]) !== this.props.posts.posts.getIn([ 'post' ]) ||
           nextProps.posts.posts.getIn([ 'modalIsOpen' ]) !== this.props.posts.posts.getIn([ 'modalIsOpen' ]) ||
           nextState.openImage !== this.state.openImage ||
-          nextState.onlyImage !== this.state.onlyImage;
+          nextState.onlyImage !== this.state.onlyImage ||
+          nextState.filter !== this.state.filter;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -134,12 +142,14 @@ class Welcome extends Component {
       this.props.posts.posts.getIn([ 'posts', 'error' ]) === undefined &&
         this.props.posts.posts.getIn([ 'posts' ]).size > 0 ?
             this.props.posts.posts.getIn([ 'posts' ]).map((post) => (
-              <div
-                key={ `post-id-${post.getIn([ 'id' ])}` }>
-                <CardView
-                  post={ post }
-                  onOpenModal={ this.props.modalIs } />
-              </div>
+              post.getIn([ 'title' ]).indexOf(this.state.filter) !== -1 ? (
+                <div
+                  key={ `post-id-${post.getIn([ 'id' ])}` }>
+                  <CardView
+                    post={ post }
+                    onOpenModal={ this.props.modalIs } />
+                </div>
+              ) : (null)
           )) : (<div>Loading data..</div>)
     );
   }
@@ -151,6 +161,14 @@ class Welcome extends Component {
           <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
         </div>
         <h1>熱門文章</h1>
+        <div>
+          <input
+            style={ { margin: '0 auto', width: '50%' } }
+            type='text'
+            className='form-control'
+            placeholder='搜尋標題'
+            onKeyDown={ this.onFilter } />
+        </div>
         <div className='cloumn-container'>
           { this.renderPosts() }
         </div>
