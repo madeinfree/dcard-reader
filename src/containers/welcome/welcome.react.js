@@ -51,6 +51,9 @@ class Welcome extends Component {
               );
             });
           }
+          if (totalImage.length === 0) {
+            pageShow = <div className='text-danger'>[ 此文章沒有任何圖片, 如需觀看請切回文字模式 ]</div>;
+          }
         }
         if (!onlyImage) {
           pageShow = openImage && !onlyImage ? (
@@ -80,8 +83,14 @@ class Welcome extends Component {
               </h4>
             </div>
             <div className='modal-footer'>
-              <button type='button' className='btn btn-default' onClick={ () => { this.setState({ onlyImage: !this.state.onlyImage }); } }>只顯示圖片</button>
-              <button type='button' className='btn btn-default' onClick={ () => { this.setState({ openImage: !this.state.openImage }); } }>顯示圖片</button>
+              <button
+                type='button'
+                className='btn btn-default'
+                onClick={ () => { this.setState({ onlyImage: !this.state.onlyImage, openImage: false }); } }>{ !this.state.onlyImage ? '只顯示圖片' : '關閉只顯示圖片' }</button>
+              <button
+                type='button'
+                className='btn btn-default'
+                onClick={ () => { this.setState({ openImage: !this.state.openImage, onlyImage: false }); } }>{ !this.state.openImage ? '顯示圖片' : '關閉顯示圖片' }</button>
               <button type='button' className='btn btn-default' onClick={ () => { this.props.modalIs(false); browserHistory.push('/'); } }>關閉</button>
             </div>
           </div>

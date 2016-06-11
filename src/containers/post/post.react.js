@@ -60,15 +60,20 @@ class Post extends Component {
         <div dangerouslySetInnerHTML={ { __html: post.posts.getIn([ 'post', 'content' ]).replace(imgReg, '<div class="text-danger">[ 請點選圖文版後顯示圖片 ]</div>') } } />
         // </pre>
       );
-
       if (onlyImage) {
         const totalImage = post.posts.getIn([ 'post', 'content' ]).match(imgReg);
         if (totalImage) {
           pageShow = totalImage.map((image) => (
+            <div>{ image }</div>
             // <pre style={ { fontSize: this.state.fontSize, whiteSpace: 'pre-wrap', height: 500, overflow: 'auto' } }>
-            <img height='500' src={ `${image}` } role='presentation' />
+            // <img height='500' src={ `${image}` } role='presentation' />
             // </pre>
           ));
+        }
+        if (totalImage & totalImage.length === 0) {
+          pageShow = (
+            <div>[ 此文章沒有任何圖片 ]</div>
+          );
         }
       }
     }
