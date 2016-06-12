@@ -79,6 +79,7 @@ class List extends Component {
               <h4 className='modal-title'>{ post.getIn([ 'title' ]) }</h4>
             </div>
             <div className='modal-body'>
+              <a className='btn btn-primary' target='_blank' href={ `https://www.dcard.tw/f/dcard/p/${post.getIn([ 'id' ])}` }>轉至Dcard原文</a>
               <h4>
                 <pre style={ { fontSize: 24, whiteSpace: 'pre-wrap' } }>
                   { pageShow }
