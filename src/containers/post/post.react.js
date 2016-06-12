@@ -13,6 +13,7 @@ import {
 import './style.css';
 
 const imgReg = /(https?:\/\/.*\.(?:png|jpg))/g;
+const isMobile = navigator.userAgent.indexOf('Mobile') !== -1;
 
 class Post extends Component {
 
@@ -133,6 +134,7 @@ class Post extends Component {
               { commentsContainer }
             </pre>
           </div>
+          <div style={ { padding: 10, marginBottom: 30 } } className='fb-comments' data-href='http://dcard-reader.herokuapp.com/' data-mobile={ isMobile } data-width={ isMobile ? '200' : '600' } data-colorscheme='light' data-numposts='5'></div>
           <div>
             <button className='btn btn-danger' style={ { position: 'fixed', bottom: 0, left: 0 } } onClick={ () => { window.scrollTo(0, 0); } }>回到頂端</button>
             <button className='btn btn-default' style={ { position: 'fixed', bottom: 0, left: 86 } } onClick={ () => { this.setState({ openImage: !this.state.openImage }); } }>顯示圖文版</button>

@@ -85,6 +85,9 @@ class List extends Component {
                 </pre>
               </h4>
             </div>
+            <div className='text-center'>
+              <div style={ { padding: 10, marginBottom: 30 } } className='fb-comments' data-href={ `http://dcard-reader.herokuapp.com/${window.location.pathname}` } data-mobile={ isMobile } data-width={ isMobile ? '200' : '600' } data-colorscheme='light' data-numposts='5'></div>
+            </div>
             <div className='modal-footer'>
               <button
                 type='button'
@@ -175,6 +178,9 @@ class List extends Component {
   }
 
   render() {
+    if (window.FB && document.getElementsByClassName([ 'fb_iframe_widget' ])[0] !== undefined) {
+      window.FB.XFBML.parse();
+    }
     return (
       <div className='text-center content-container' style={ { overflow: 'auto' } }>
         <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
