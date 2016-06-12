@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import {
   fetchPosts,
   fetchPost,
+  fetchComment,
   modalIs
 } from '../../actions/posts-actions';
 
@@ -18,6 +19,7 @@ import Modal from 'react-modal';
 
 const imgReg = /(https?:\/\/.*\.(?:png|jpg))/g;
 const imgurReg = /(https?:\/\/imgur.com\/(\w*\d\w*)+(\.[a-zA-Z]{3})?)/g;
+const commentsHashReg = /B([0-9]*)/;
 const isMobile = navigator.userAgent.indexOf('Mobile') !== -1;
 
 class Welcome extends Component {
@@ -28,13 +30,15 @@ class Welcome extends Component {
       openImage: false,
       onlyImage: false,
       firstIn: true,
+      openComments: false,
       filter: ''
     };
 
-    this.renderModalContent = (post) => {
+    this.renderModalContent = (post, comments) => {
       const {
         openImage,
-        onlyImage
+        onlyImage,
+        openComments
       } = this.state;
       let pageShow;
       if (post.getIn && !post.getIn([ 'error' ]) && this.props.params.id) {
@@ -66,6 +70,32 @@ class Welcome extends Component {
                 .replace(imgReg, '<div class="text-danger">[ 請點選圖文版後顯示圖片 ]</div>') }
             } />
           );
+          if (openComments) {
+            if (comments.size > 0) {
+              pageShow = comments.map((comment, index) => {
+                if (comment.getIn([ 'content' ]) !== undefined) {
+                  const commentHash = comment.getIn([ 'content' ]).replace(commentsHashReg, '<a href=#comment-$1>B-$1</a>');
+                  return (
+                    <div key={ `comment-${comment.getIn([ 'id' ])}` }>
+                      <div id={ `comment-${index + 1}` }>
+                        <a href={ `#comment-${index + 1}` }>{ `B-${parseInt(index + 1, 10)}` }</a>
+                      </div>
+                      <div>
+                        { comment.getIn([ 'school' ]) }
+                      </div>
+                      <div dangerouslySetInnerHTML={ { __html: commentHash } }>
+                      </div>
+                      <div>
+                        { comment.getIn([ 'updateAt' ]) }
+                      </div>
+                      <hr />
+                    </div>
+                  );
+                }
+                return null;
+              });
+            }
+          }
         }
         return (
           <div className='modal-content'>
@@ -77,7 +107,22 @@ class Welcome extends Component {
               <h4 className='modal-title'>{ post.getIn([ 'title' ]) }</h4>
             </div>
             <div className='modal-body'>
-              <a className='btn btn-primary' target='_blank' href={ `https://www.dcard.tw/f/dcard/p/${post.getIn([ 'id' ])}` }>轉至Dcard原文</a>
+              <div style={ { display: 'flex', justifyContent: 'space-between' } }>
+                <div>
+                  <a className='btn btn-default' target='_blank' href={ `https://www.dcard.tw/f/dcard/p/${post.getIn([ 'id' ])}` }>原文</a>
+                </div>
+                <div>
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    onClick={ () => { this.setState({ onlyImage: !this.state.onlyImage, openImage: false }); } }>{ !this.state.onlyImage ? '只顯示圖片' : '關閉只顯示圖片' }</button>
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    onClick={ () => { this.setState({ openImage: !this.state.openImage, onlyImage: false }); } }>{ !this.state.openImage ? '顯示圖片' : '關閉顯示圖片' }</button>
+                  <button type='button' className='btn btn-primary' onClick={ () => { this.setState({ openComments: !this.state.openComments }); } }>觀看回覆</button>
+                </div>
+              </div>
               <h4>
                 <pre style={ { fontSize: 24, whiteSpace: 'pre-wrap' } }>
                   { pageShow }
@@ -112,23 +157,36 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
+    if (window.location.hash.indexOf('#') !== -1 && this.state.firstIn) {
+      window.history.pushState('', document.title, window.location.pathname + window.location.search);
+    }
     this.props.fetchPosts();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (window.location.hash.indexOf('#') !== -1) {
+      window.history.pushState('', document.title, window.location.pathname + window.location.search);
+      return false;
+    }
     return nextProps.posts.posts.getIn([ 'posts' ]) !== this.props.posts.posts.getIn([ 'posts' ]) ||
           nextProps.posts.posts.getIn([ 'post' ]) !== this.props.posts.posts.getIn([ 'post' ]) ||
           nextProps.posts.posts.getIn([ 'modalIsOpen' ]) !== this.props.posts.posts.getIn([ 'modalIsOpen' ]) ||
           nextState.openImage !== this.state.openImage ||
           nextState.onlyImage !== this.state.onlyImage ||
+          nextState.openComments !== this.state.openComments ||
           nextState.filter !== this.state.filter;
   }
 
   componentWillReceiveProps(nextProps) {
     if ((nextProps.params.id !== undefined) && (nextProps.params.id !== this.props.params.id)) {
+      this.props.fetchComment(nextProps.params.id);
       this.props.fetchPost(nextProps.params.id);
+      this.setState({
+        openComments: false
+      });
     }
     if (this.props.params.id && this.state.firstIn) {
+      this.props.fetchComment(this.props.params.id);
       this.props.fetchPost(this.props.params.id);
       this.props.modalIs(true);
       this.state.firstIn = false;
@@ -185,7 +243,7 @@ class Welcome extends Component {
           closeTimeoutMS={ 150 }
           isOpen={ this.props.posts.posts.getIn([ 'modalIsOpen' ]) }
           onRequestClose={ () => { this.props.modalIs(false); browserHistory.push('/'); } }>
-          { this.renderModalContent(this.props.posts.posts.getIn([ 'post' ])) }
+          { this.renderModalContent(this.props.posts.posts.getIn([ 'post' ]), this.props.posts.posts.getIn([ 'comments' ])) }
         </Modal>
       </div>
     );
@@ -260,6 +318,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = {
   fetchPosts,
   fetchPost,
+  fetchComment,
   modalIs
 };
 

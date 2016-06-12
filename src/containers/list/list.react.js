@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import {
   fetchPosts,
   fetchPost,
+  fetchComment,
   modalIs
 } from '../../actions/posts-actions';
 
@@ -16,6 +17,7 @@ import Modal from 'react-modal';
 
 const imgReg = /(https?:\/\/.*\.(?:png|jpg))/g;
 const imgurReg = /(https?:\/\/imgur.com\/(\w*\d\w*)+(\.[a-zA-Z]{3})?)/g;
+const commentsHashReg = /B([0-9]*)/;
 const isMobile = navigator.userAgent.indexOf('Mobile') !== -1;
 
 class List extends Component {
@@ -25,18 +27,19 @@ class List extends Component {
     this.state = {
       openImage: false,
       onlyImage: false,
+      openComments: false,
       firstIn: true,
       filter: ''
     };
-    // <div
-    //   key={ `post-${index}-${post.getIn([ 'id' ])}` }>
-    //   <img width='50%' src={ `${image}` } role='presentation' />
-    // </div>
 
-    this.renderModalContent = (post) => {
+    this.renderModalContent = (post, comments) => {
+      if (window.FB && document.getElementsByClassName([ 'fb_iframe_widget' ])[0] !== undefined) {
+        window.FB.XFBML.parse();
+      }
       const {
         openImage,
-        onlyImage
+        onlyImage,
+        openComments
       } = this.state;
       let pageShow;
       if (post.getIn && !post.getIn([ 'error' ]) && this.props.params.id) {
@@ -69,6 +72,32 @@ class List extends Component {
             } />
           );
         }
+        if (openComments) {
+          if (comments.size > 0) {
+            pageShow = comments.map((comment, index) => {
+              if (comment.getIn([ 'content' ]) !== undefined) {
+                const commentHash = comment.getIn([ 'content' ]).replace(commentsHashReg, '<a href=#comment-$1>B-$1</a>');
+                return (
+                  <div key={ `comment-${comment.getIn([ 'id' ])}` }>
+                    <div id={ `comment-${index + 1}` }>
+                      <a href={ `#comment-${index + 1}` }>{ `B-${parseInt(index + 1, 10)}` }</a>
+                    </div>
+                    <div>
+                      { comment.getIn([ 'school' ]) }
+                    </div>
+                    <div dangerouslySetInnerHTML={ { __html: commentHash } }>
+                    </div>
+                    <div>
+                      { comment.getIn([ 'updateAt' ]) }
+                    </div>
+                    <hr />
+                  </div>
+                );
+              }
+              return null;
+            });
+          }
+        }
         return (
           <div className='modal-content'>
             <div className='modal-header'>
@@ -79,7 +108,22 @@ class List extends Component {
               <h4 className='modal-title'>{ post.getIn([ 'title' ]) }</h4>
             </div>
             <div className='modal-body'>
-              <a className='btn btn-primary' target='_blank' href={ `https://www.dcard.tw/f/dcard/p/${post.getIn([ 'id' ])}` }>轉至Dcard原文</a>
+              <div style={ { display: 'flex', justifyContent: 'space-between' } }>
+                <div>
+                  <a className='btn btn-default' target='_blank' href={ `https://www.dcard.tw/f/dcard/p/${post.getIn([ 'id' ])}` }>原文</a>
+                </div>
+                <div>
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    onClick={ () => { this.setState({ onlyImage: !this.state.onlyImage, openImage: false }); } }>{ !this.state.onlyImage ? '只顯示圖片' : '關閉只顯示圖片' }</button>
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    onClick={ () => { this.setState({ openImage: !this.state.openImage, onlyImage: false }); } }>{ !this.state.openImage ? '顯示圖片' : '關閉顯示圖片' }</button>
+                  <button type='button' className='btn btn-primary' onClick={ () => { this.setState({ openComments: !this.state.openComments }); } }>觀看回覆</button>
+                </div>
+              </div>
               <h4>
                 <pre style={ { fontSize: 24, whiteSpace: 'pre-wrap' } }>
                   { pageShow }
@@ -120,9 +164,14 @@ class List extends Component {
 
   componentWillReceiveProps(nextProps) {
     if ((nextProps.params.id !== undefined) && (nextProps.params.id !== this.props.params.id)) {
+      this.props.fetchComment(nextProps.params.id);
       this.props.fetchPost(nextProps.params.id);
+      this.setState({
+        openComments: false
+      });
     }
     if (this.props.params.id && this.state.firstIn) {
+      this.props.fetchComment(this.props.params.id);
       this.props.fetchPost(this.props.params.id);
       this.props.modalIs(true);
       this.state.firstIn = false;
@@ -130,10 +179,9 @@ class List extends Component {
   }
 
   componentDidMount() {
-    if (window.FB && document.getElementsByClassName([ 'fb_iframe_widget' ])[0] === undefined) {
-      window.FB.XFBML.parse();
+    if (window.location.hash.indexOf('#') !== -1 && this.state.firstIn) {
+      window.history.pushState('', document.title, window.location.pathname + window.location.search);
     }
-
     const shouldUpdate = window.location.pathname.split('/')[2] !== undefined && this.props.posts.posts.getIn([ 'forumsRoute' ]) !== window.location.pathname.split('/')[2];
     this.props.fetchPosts(window.location.pathname.split('/')[2], shouldUpdate);
   }
@@ -141,6 +189,10 @@ class List extends Component {
   componentWillUnmount() {}
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (window.location.hash.indexOf('#') !== -1) {
+      window.history.pushState('', document.title, window.location.pathname + window.location.search);
+      return false;
+    }
     if (nextProps.routeParams !== this.props.routeParams) {
       this.componentDidMount();
       return true;
@@ -150,6 +202,7 @@ class List extends Component {
           nextProps.posts.posts.getIn([ 'modalIsOpen' ]) !== this.props.posts.posts.getIn([ 'modalIsOpen' ]) ||
           nextState.openImage !== this.state.openImage ||
           nextState.onlyImage !== this.state.onlyImage ||
+          nextState.openComments !== this.state.openComments ||
           nextState.filter !== this.state.filter;
   }
 
@@ -179,9 +232,6 @@ class List extends Component {
   }
 
   render() {
-    if (window.FB && document.getElementsByClassName([ 'fb_iframe_widget' ])[0] !== undefined) {
-      window.FB.XFBML.parse();
-    }
     return (
       <div className='text-center content-container' style={ { overflow: 'auto' } }>
         <div className='fb-like' data-href='http://dcard-reader.herokuapp.com/' data-width='200' data-layout='button_count' data-action='like' data-show-faces='true' data-share='true'></div>
@@ -203,7 +253,7 @@ class List extends Component {
           closeTimeoutMS={ 150 }
           isOpen={ this.props.posts.posts.getIn([ 'modalIsOpen' ]) }
           onRequestClose={ () => { this.props.modalIs(false); browserHistory.push(`/forums/${this.props.posts.posts.getIn([ 'forumsRoute' ])}`); } }>
-          { this.renderModalContent(this.props.posts.posts.getIn([ 'post' ])) }
+          { this.renderModalContent(this.props.posts.posts.getIn([ 'post' ]), this.props.posts.posts.getIn([ 'comments' ])) }
         </Modal>
       </div>
     );
@@ -278,6 +328,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = {
   fetchPosts,
   fetchPost,
+  fetchComment,
   modalIs
 };
 

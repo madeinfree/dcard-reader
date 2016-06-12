@@ -54,7 +54,6 @@ app.use(function *() {
     <body>
     <div id="fb-root"></div>
     <div id="app"></div>
-    <script type="text/javascript" src='/build/bundle.js'></script>
     <script>
       var config = {
         apiUrl: '${process.env.NODE_ENV}' === 'production' ? '${process.env.SERVER_URL}' : 'localhost:3002'
@@ -76,6 +75,7 @@ app.use(function *() {
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
     </script>
+    <script type="text/javascript" src='/build/bundle.js'></script>
   </html>
   `;
 });
