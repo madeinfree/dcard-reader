@@ -22,6 +22,8 @@ const imgurReg = /(https?:\/\/imgur.com\/(\w*\d\w*)+(\.[a-zA-Z]{3})?)/g;
 const commentsHashReg = /B([0-9]*)/;
 const isMobile = navigator.userAgent.indexOf('Mobile') !== -1;
 
+let openCardViewIndex = 0;
+
 class Welcome extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,7 @@ class Welcome extends Component {
       filter: ''
     };
 
-    this.renderModalContent = (post, comments) => {
+    this.renderModalContent = (posts, post, comments) => {
       const {
         openImage,
         onlyImage,
@@ -110,6 +112,12 @@ class Welcome extends Component {
               <div style={ { display: 'flex', justifyContent: 'space-between' } }>
                 <div>
                   <a className='btn btn-default' target='_blank' href={ `https://www.dcard.tw/f/dcard/p/${post.getIn([ 'id' ])}` }>原文</a>
+                  <button
+                    className='btn btn-default'
+                    onClick={ () => { browserHistory.push(`/post/${posts.getIn([ openCardViewIndex - 1, 'id' ])}`); openCardViewIndex = openCardViewIndex - 1; } }>上一篇</button>
+                  <button
+                    className='btn btn-default'
+                    onClick={ () => { browserHistory.push(`/post/${posts.getIn([ openCardViewIndex + 1, 'id' ])}`); openCardViewIndex = openCardViewIndex + 1; } }>下一篇</button>
                 </div>
                 <div>
                   <button
@@ -203,12 +211,13 @@ class Welcome extends Component {
     return (
       this.props.posts.posts.getIn([ 'posts', 'error' ]) === undefined &&
         this.props.posts.posts.getIn([ 'posts' ]).size > 0 ?
-            this.props.posts.posts.getIn([ 'posts' ]).map((post) => (
+            this.props.posts.posts.getIn([ 'posts' ]).map((post, index) => (
               post.getIn([ 'title' ]).indexOf(this.state.filter) !== -1 ? (
                 <div
                   key={ `post-id-${post.getIn([ 'id' ])}` }>
                   <CardView
                     post={ post }
+                    idx={ index }
                     onOpenModal={ this.props.modalIs } />
                 </div>
               ) : (null)
@@ -243,7 +252,7 @@ class Welcome extends Component {
           closeTimeoutMS={ 150 }
           isOpen={ this.props.posts.posts.getIn([ 'modalIsOpen' ]) }
           onRequestClose={ () => { this.props.modalIs(false); browserHistory.push('/'); } }>
-          { this.renderModalContent(this.props.posts.posts.getIn([ 'post' ]), this.props.posts.posts.getIn([ 'comments' ])) }
+          { this.renderModalContent(this.props.posts.posts.getIn([ 'posts' ]), this.props.posts.posts.getIn([ 'post' ]), this.props.posts.posts.getIn([ 'comments' ])) }
         </Modal>
       </div>
     );
@@ -255,7 +264,7 @@ const CardView = (props) => (
     style={ { cursor: 'pointer' } }
     className='card'
     onClick={
-      () => { props.onOpenModal(true); browserHistory.push(`/post/${props.post.getIn([ 'id' ])}`); }
+      () => { props.onOpenModal(true); browserHistory.push(`/post/${props.post.getIn([ 'id' ])}`); openCardViewIndex = props.idx; }
   }>
     <div
       style={ {
