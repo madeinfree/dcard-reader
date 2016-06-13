@@ -14,70 +14,90 @@ app.use(conditional());
 app.use(etag());
 app.use(cors());
 
+let hotNews = null;
+let forums = null;
+const category = {};
+const posts = {};
+const comments = {};
+
 router
   .get('/', function *() {
     this.body = 'Public Api Server';
   })
   .get('/api/news', function *() {
-    const res = yield fetch('https://www.dcard.tw/_api/posts?popular=true&limit=100', {
-      cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    const result = yield res.json();
-    this.body = result;
+    if (hotNews === null) {
+      const res = yield fetch('https://www.dcard.tw/_api/posts?popular=true&limit=100', {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = yield res.json();
+      hotNews = result;
+      this.body = result;
+    }
+    this.body = hotNews;
   })
   .get('/api/forums/', function *() {
-    // this.headers = new Headers();
-    // const cookie = this.headers.getAll("cookie").join(';');
-    // const xsrfToken = this.headers.get("x-xsrf-token");
-    const res = yield fetch('https://www.dcard.tw/_api/forums/', {
-      cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    const result = yield res.json();
-    this.body = result;
+    if (forums == null) {
+      const res = yield fetch('https://www.dcard.tw/_api/forums/', {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = yield res.json();
+      forums = result;
+      this.body = result;
+    }
+    this.body = forums;
   })
   .get('/api/forums/:category', function *() {
-    // this.headers = new Headers();
-    // const cookie = this.headers.getAll("cookie").join(';');
-    // const xsrfToken = this.headers.get("x-xsrf-token");
-    const res = yield fetch(`https://www.dcard.tw/_api/forums/${this.params.category}/posts?popular=true&limit=100`, {
-      cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    const result = yield res.json();
-    this.body = result;
+    if (Object.keys(category).indexOf(this.params.category) === -1) {
+      const res = yield fetch(`https://www.dcard.tw/_api/forums/${this.params.category}/posts?popular=true&limit=100`, {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = yield res.json();
+      category[this.params.category] = result;
+      this.body = result;
+    }
+    this.body = category[this.params.category];
   })
   .get('/api/post/:id', function *() {
-    const res = yield fetch(`https://www.dcard.tw/_api/posts/${this.params.id}?`, {
-      cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    const result = yield res.json();
-    this.body = result;
+    if (Object.keys(posts).indexOf(this.params.id) === -1) {
+      const res = yield fetch(`https://www.dcard.tw/_api/posts/${this.params.id}?`, {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = yield res.json();
+      posts[this.params.id] = result;
+      this.body = result;
+    }
+    this.body = posts[this.params.id];
   })
   .get('/api/post/:id/comments', function *() {
-    const res = yield fetch(`https://www.dcard.tw/_api/posts/${this.params.id}/comments?limit=100`, {
-      cache: 'no-store',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    });
-    const result = yield res.json();
-    this.body = result;
+    if (Object.keys(comments).indexOf(this.params.id) === -1) {
+      const res = yield fetch(`https://www.dcard.tw/_api/posts/${this.params.id}/comments?limit=100`, {
+        cache: 'no-store',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = yield res.json();
+      comments[this.params.id] = result;
+      this.body = result;
+    }
+    this.body = comments[this.params.id];
   });
 
 app.use(router.routes());
